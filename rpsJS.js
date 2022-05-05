@@ -42,7 +42,7 @@ function computerPlay() {
     //random number 0-2
 
     /* delete this!!! for testing only*/
-    return "scissors";
+    return "paper";
 
     let randomNum = Math.floor(Math.random() * 3);
     if (randomNum==0){
@@ -67,31 +67,31 @@ function singleRound(userPlay, cpuPlay){
             return "Tie game!"
         }
         if (cpuPlay =="paper"){
-            return "Cpu Wins!"
+            return `You Lose! ${cpuPlay} beats ${userPlay}`
         }
         else {
-            return "Player Wins!"
+            return `You Win! ${userPlay} beats ${cpuPlay}`
         }
     }
 
     if (userPlay=="paper"){
         if (cpuPlay =="rock"){
-            return "Player Wins!"
+            return `You Win! ${userPlay} beats ${cpuPlay}`
         }
         if (cpuPlay =="paper"){
             return "Tie game!"
         }
         else {
-            return "Cpu Wins!"
+            return `You Lose! ${cpuPlay} beats ${userPlay}`
         }
     }
 
     if (userPlay=="scissors"){
         if (cpuPlay =="rock"){
-            return "Cpu Wins!"
+            return `You Lose! ${cpuPlay} beats ${userPlay}`
         }
         if (cpuPlay =="paper"){
-            return "Player Wins!"
+            return `You Win! ${userPlay} beats ${cpuPlay}`
         }
         else {
             return "Tie game!"
@@ -112,7 +112,15 @@ function userPlay(){
     return userSelect.toLowerCase();
 }
 
-
+/*
+displayscore function
+purpose: display the user and cpu score
+arguments: none
+return: none
+*/
+function displayScore() {
+    console.log(`You have won ${userWin} games and the CPU has won ${cpuWin} games`)
+}
 
 /*
 declare variables
@@ -130,15 +138,15 @@ cpuSelect = computerPlay();
 roundWinner = singleRound(userSelect, cpuSelect)
 console.log(roundWinner);
 
-
-switch (roundWinner) {
-    case "Player Wins!":
-        userWin++;
-        break;
-    case "Cpu Wins":
+switch (roundWinner.slice(4,5)) {
+    case "L":
         cpuWin++;
+        break;
+    case "W":
+        userWin++;
         break;
     default:
         break;
 }
 
+displayScore();
