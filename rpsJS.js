@@ -41,8 +41,8 @@ Tip: use the console to make sure this is returning the expected output before m
 function computerPlay() {
     //random number 0-2
 
-    /* delete this!!! for testing only*/
-    return "paper";
+    
+    
 
     let randomNum = Math.floor(Math.random() * 3);
     if (randomNum==0){
@@ -61,7 +61,7 @@ Write a function that plays a single round of Rock Paper Scissors.
 The function should take two parameters - the playerSelection and computerSelection - 
 and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
 */
-function singleRound(userPlay, cpuPlay){
+function playRound(userPlay, cpuPlay){
     if (userPlay=="rock"){
         if (cpuPlay =="rock"){           
             return "Tie game!"
@@ -106,9 +106,9 @@ return: userSelecString as lowercase
 */
 
 function userPlay(){
-    /***delete me - for testing only */
-    userSelect = "rock";
-    //userSelect = prompt("Rock Paper or Scissors");
+    
+    
+    userSelect = prompt("Rock Paper or Scissors");
     return userSelect.toLowerCase();
 }
 
@@ -122,6 +122,41 @@ function displayScore() {
     console.log(`You have won ${userWin} games and the CPU has won ${cpuWin} games`)
 }
 
+
+/*
+function game
+purpose: 
+-play 5 rounds singleRound 
+-displays winner/loser
+arguments:
+returns:
+*/
+
+function game(){
+
+    for(let i=1; i<=5; i++){
+        userSelect = userPlay();
+        cpuSelect = computerPlay();
+
+        roundWinner = playRound(userSelect, cpuSelect)
+        console.log(roundWinner);
+
+        switch (roundWinner.slice(4,5)) {
+            case "L":
+                cpuWin++;
+                break;
+            case "W":
+                userWin++;
+                break;
+            default:
+                break;
+        }
+        displayScore();
+    }
+
+}
+
+
 /*
 declare variables
 */
@@ -132,21 +167,5 @@ let roundWinner="";
 let userWin = 0;
 let cpuWin = 0;
 
-userSelect = userPlay();
-cpuSelect = computerPlay();
+game();
 
-roundWinner = singleRound(userSelect, cpuSelect)
-console.log(roundWinner);
-
-switch (roundWinner.slice(4,5)) {
-    case "L":
-        cpuWin++;
-        break;
-    case "W":
-        userWin++;
-        break;
-    default:
-        break;
-}
-
-displayScore();
