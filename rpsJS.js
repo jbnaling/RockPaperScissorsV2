@@ -32,18 +32,12 @@ event listener for game buttons
 */
 
 /* 
-Your game is going to play against the computer, so begin with a function called computerPlay 
-that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. 
-We’ll use this function in the game to make the computer’s play. 
-Tip: use the console to make sure this is returning the expected output before moving to the next step!
+Function playCPU
+randomly selects rock, paper, or scissors
 */
 
-function computerPlay() {
+function playCPU() {
     //random number 0-2
-
-    
-    
-
     let randomNum = Math.floor(Math.random() * 3);
     if (randomNum==0){
         return "rock";
@@ -100,14 +94,11 @@ function playRound(userPlay, cpuPlay){
 }
 
 /*
-write userPlay as a function
-purpose: prompt user to select rock paper scissor
-return: userSelecString as lowercase
+function playUser: 
+prompt user to select rock paper or scissors
 */
 
-function userPlay(){
-    
-    
+function playUser(){
     userSelect = prompt("Rock Paper or Scissors");
     return userSelect.toLowerCase();
 }
@@ -115,8 +106,6 @@ function userPlay(){
 /*
 displayscore function
 purpose: display the user and cpu score
-arguments: none
-return: none
 */
 function displayScore() {
     console.log(`You have won ${userWin} games and the CPU has won ${cpuWin} games`)
@@ -126,17 +115,14 @@ function displayScore() {
 /*
 function game
 purpose: 
--play 5 rounds singleRound 
--displays winner/loser
-arguments:
-returns:
+-plays 5 rounds of rock paper scissors between user and cpu
 */
 
-function game(){
+function playGame(){
 
     for(let i=1; i<=5; i++){
-        userSelect = userPlay();
-        cpuSelect = computerPlay();
+        userSelect = playUser();
+        cpuSelect = playCPU();
 
         roundWinner = playRound(userSelect, cpuSelect)
         console.log(roundWinner);
@@ -158,7 +144,7 @@ function game(){
 
 
 /*
-declare variables
+declare variables and play game
 */
 
 let userSelect="";
@@ -167,5 +153,5 @@ let roundWinner="";
 let userWin = 0;
 let cpuWin = 0;
 
-game();
+playGame();
 
