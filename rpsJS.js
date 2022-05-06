@@ -51,9 +51,7 @@ function playCPU() {
 }
 
 /* 
-Write a function that plays a single round of Rock Paper Scissors. 
-The function should take two parameters - the playerSelection and computerSelection - 
-and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
+Plays a round of rock paper scissors between user and cpu selections
 */
 function playRound(userPlay, cpuPlay){
     if (userPlay=="rock"){
@@ -113,6 +111,25 @@ function displayScore() {
 
 
 /*
+update score:
+finds the rounds winner and add's to the win totals for cpu or user
+*/
+
+function updateScore() {
+    switch (roundWinner.slice(4,5)) {
+        case "L":
+            cpuWin++;
+            break;
+        case "W":
+            userWin++;
+            break;
+        default:
+            break;
+    }
+
+}
+
+/*
 function game
 purpose: 
 -plays 5 rounds of rock paper scissors between user and cpu
@@ -126,17 +143,7 @@ function playGame(){
 
         roundWinner = playRound(userSelect, cpuSelect)
         console.log(roundWinner);
-
-        switch (roundWinner.slice(4,5)) {
-            case "L":
-                cpuWin++;
-                break;
-            case "W":
-                userWin++;
-                break;
-            default:
-                break;
-        }
+        updateScore();
         displayScore();
     }
 
