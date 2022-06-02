@@ -1,35 +1,61 @@
-/*
-program the buttons 
-
--get highlight them when hovering
--get values
-*/
-
-/*
-how do i create this with a class and an array?
-*/
-
 const gameButtonsCollection = document.getElementsByClassName("gameButton");
 
 /*
 event listener for game buttons
-- border on mouse-over
+- border for selecting via keydown
+    - lasts for .5 seconds and then goes away
 */
 
-for (let i=0; i<gameButtonsCollection.length; i++){
-    
-    gameButtonsCollection[i].addEventListener("mouseover", function(){
-        gameButtonsCollection[i].style.border="thick solid red";
-    })
-    gameButtonsCollection[i].addEventListener("mouseout", function(){
-        gameButtonsCollection[i].style.border="none";
-    })
+function addBorder(e){
+    if (e.keyCode == "82"){
+        gameButtonsCollection[0].classList.add("animate");
+    }
+    if (e.keyCode == 80) {
+        gameButtonsCollection[1].classList.add("animate");
+      }
+    if (e.keyCode == 83) {
+        gameButtonsCollection[2].classList.add("animate");
+    }
+};
+
+function removeBorder(){
+    gameButtonsCollection[0].classList.remove("animate");
+    gameButtonsCollection[1].classList.remove("animate");
+    gameButtonsCollection[2].classList.remove("animate");
+};
+/*
+selects user play based on keyboard selection or mouse click
+*/
+
+function selectUser(e){
+    if (e.keyCode !="82" &&
+        e.keyCode !="80" &&
+        e.keyCode !="83"){
+        console.log("invalid keypress")
+        return;
+    }
+
+    if (e.keyCode == "82"){
+        userSelect = "rock";
+    }
+    if (e.keyCode == 80) {
+        userSelect = "paper";      
+      }
+    if (e.keyCode == 83) {
+        userSelect = "scissors";
+    }
+
+    console.log(userSelect);
+    playCPU();
+
 }
 
-/*
-event listener for game buttons
--click and get value of image
-*/
+window.addEventListener("keydown", addBorder);
+window.addEventListener("keydown", selectUser);
+document.addEventListener("transitionend", removeBorder);
+
+
+
 
 /* 
 Function playCPU
@@ -38,52 +64,63 @@ randomly selects rock, paper, or scissors
 
 function playCPU() {
     //random number 0-2
+    
     let randomNum = Math.floor(Math.random() * 3);
     if (randomNum==0){
-        return "rock";
+        cpuSelect = "rock";
     }
     if (randomNum==1){
-        return "paper";
+        cpuSelect = "paper";
     }
     if (randomNum==2){        
-        return "scissors";
+        cpuSelect = "scissors";
     }
+    console.log("user has played " + userSelect);
+    console.log("cpu has played " + cpuSelect);
+    playRound();
 }
+
 
 /* 
 Plays a round of rock paper scissors between user and cpu selections
 */
-function playRound(userPlay, cpuPlay){
-    if (userPlay=="rock"){
-        if (cpuPlay =="rock"){           
+// function playRound(userPlay, cpuPlay){
+function playRound(){ 
+
+        if (userSelect=="rock"){
+        if (cpuSelect =="rock"){       
+            console.log("Tie Game")
             return "Tie game!"
         }
-        if (cpuPlay =="paper"){
-            return `You Lose! ${cpuPlay} beats ${userPlay}`
+        if (cpuSelect =="paper"){
+            console.log("You lose")
+            return `You Lose! ${cpuSelect} beats ${userSelect}`
+           
         }
         else {
-            return `You Win! ${userPlay} beats ${cpuPlay}`
+            console.log("You Win")
+            return `You Win! ${userSelect} beats ${cpuSelect}`
         }
     }
 
-    if (userPlay=="paper"){
-        if (cpuPlay =="rock"){
-            return `You Win! ${userPlay} beats ${cpuPlay}`
+    if (userSelect=="paper"){
+        if (cpuSelect =="rock"){
+            return `You Win! ${userSelect} beats ${cpuSelect}`
         }
-        if (cpuPlay =="paper"){
+        if (cpuSelect =="paper"){
             return "Tie game!"
         }
         else {
-            return `You Lose! ${cpuPlay} beats ${userPlay}`
+            return `You Lose! ${cpuSelect} beats ${userSelect}`
         }
     }
 
-    if (userPlay=="scissors"){
-        if (cpuPlay =="rock"){
-            return `You Lose! ${cpuPlay} beats ${userPlay}`
+    if (userSelect=="scissors"){
+        if (cpuSelect =="rock"){
+            return `You Lose! ${cpuSelect} beats ${userSelect}`
         }
-        if (cpuPlay =="paper"){
-            return `You Win! ${userPlay} beats ${cpuPlay}`
+        if (cpuSelect =="paper"){
+            return `You Win! ${userSelect} beats ${cpuSelect}`
         }
         else {
             return "Tie game!"
@@ -91,15 +128,7 @@ function playRound(userPlay, cpuPlay){
     }
 }
 
-/*
-function playUser: 
-prompt user to select rock paper or scissors
-*/
 
-function playUser(){
-    userSelect = prompt("Rock Paper or Scissors");
-    return userSelect.toLowerCase();
-}
 
 /*
 displayscore function
@@ -135,19 +164,22 @@ purpose:
 -plays 5 rounds of rock paper scissors between user and cpu
 */
 
-function playGame(){
 
-    for(let i=1; i<=5; i++){
-        userSelect = playUser();
-        cpuSelect = playCPU();
 
-        roundWinner = playRound(userSelect, cpuSelect)
-        console.log(roundWinner);
-        updateScore();
-        displayScore();
-    }
 
-}
+// function playGame(){
+
+//     for(let i=1; i<=5; i++){
+//         userSelect = playUser();
+//         cpuSelect = playCPU();
+
+//         roundWinner = playRound(userSelect, cpuSelect)
+//         console.log(roundWinner);
+//         updateScore();
+//         displayScore();
+//     }
+
+// }
 
 
 /*
@@ -156,9 +188,9 @@ declare variables and play game
 
 let userSelect="";
 let cpuSelect= "";
-let roundWinner="";
-let userWin = 0;
-let cpuWin = 0;
+// let roundWinner="";
+// let userWin = 0;
+// let cpuWin = 0;
 
-playGame();
+// playGame();
 
