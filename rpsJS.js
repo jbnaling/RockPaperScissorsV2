@@ -1,10 +1,10 @@
-const gameButtonsCollection = document.getElementsByClassName("gameButton");
-
 /*
 event listener for game buttons
 - border for selecting via keydown
     - lasts for .5 seconds and then goes away
 */
+
+const gameButtonsCollection = document.getElementsByClassName("gameButton");
 
 function addBorder(e){
     if (e.keyCode == "82"){
@@ -28,11 +28,24 @@ selects user play based on keyboard selection or mouse click
 */
 
 function selectUser(e){
+
+    if (modalRestart.style.visibility == "visible"){
+        return;
+    }
+
     if (e.keyCode !="82" &&
         e.keyCode !="80" &&
-        e.keyCode !="83"){
+        e.keyCode !="83" &&
+        e.target.id != "rock" &&
+        e.target.id != "paper" &&
+        e.target.id != "scissors" 
+        ){
         console.log("invalid keypress")
         return;
+        }
+
+    if (e.target){
+        userSelect = e.target.id;
     }
 
     if (e.keyCode == "82"){
@@ -44,8 +57,7 @@ function selectUser(e){
     if (e.keyCode == 83) {
         userSelect = "scissors";
     }
-
-    console.log(userSelect);
+    
     playCPU();
 
 }
@@ -54,13 +66,14 @@ window.addEventListener("keydown", addBorder);
 window.addEventListener("keydown", selectUser);
 document.addEventListener("transitionend", removeBorder);
 
+let rock = document.getElementById("rock");
+let paper = document.getElementById("paper");
+let scissors = document.getElementById("scissors");
 
+rock.addEventListener("click", selectUser);
+paper.addEventListener("click", selectUser);
+scissors    .addEventListener("click", selectUser);
 
-
-/* 
-Function playCPU
-randomly selects rock, paper, or scissors
-*/
 
 function playCPU() {
     //random number 0-2
@@ -77,17 +90,12 @@ function playCPU() {
     }
     console.log("user has played " + userSelect);
     console.log("cpu has played " + cpuSelect);
-    playRound();
+    playGame();
 }
 
+function findWinner(){
 
-/* 
-Plays a round of rock paper scissors between user and cpu selections
-*/
-// function playRound(userPlay, cpuPlay){
-function playRound(){ 
-
-        if (userSelect=="rock"){
+    if (userSelect=="rock"){
         if (cpuSelect =="rock"){       
             console.log("Tie Game")
             return "Tie game!"
@@ -128,14 +136,90 @@ function playRound(){
     }
 }
 
+/* 
+Plays a round of rock paper scissors between user and cpu selections
+*/
+let won = document.getElementById("won");
 
+function displayRound(){
+    won.innerText = roundWinner;
+}
 
 /*
-displayscore function
-purpose: display the user and cpu score
+declare variables and play game
 */
+
+let userSelect="";
+let cpuSelect= "";
+let roundWinner="";
+let userWin = 0;
+let cpuWin = 0;
+
+function playGame(){ 
+    roundWinner = findWinner();
+    displayRound();
+    updateScore();
+    displayScore();
+}
+
+
+
 function displayScore() {
     console.log(`You have won ${userWin} games and the CPU has won ${cpuWin} games`)
+    UserScore.innerText = `User: ${userWin}`;
+    CPUScore.innerText = `CPU: ${cpuWin}`;
+
+    if (userWin == 5 ||
+        cpuWin ==5){
+        
+        restartGame();
+    }
+}
+/*
+modal visible/invisible 
+*/
+let modalRestart = document.querySelector(".restart");
+let close = document.querySelector(".close");
+close.addEventListener("click", closeRestartScreen);
+modalRestart.addEventListener("click", closeRestartScreen);
+
+
+function restartGame(){
+    showRestartScreen();
+}
+
+function resetScores() {
+    userWin = 0;
+    cpuWin = 0;
+    displayScore();
+}
+
+function showRestartScreen(){
+    if (window.getComputedStyle(document.querySelector('.restart')).visibility == "hidden"){
+      modalRestart.style.visibility = "visible";
+      let modalText = document.getElementById("modal-text")
+      modalText.style.fontSize = "30px"
+
+      if (userWin =="5") {
+        modalText.textContent = `You Won the match!`;
+        }
+      else {
+        modalText.textContent = `You Lost the match!`;
+        }
+    }    
+
+
+}
+
+function closeRestartScreen(){    
+        modalRestart.style.visibility = "hidden";
+        resetScores();
+        won.textContent = "";
+}
+let score = document.getElementById("score");
+
+function toggleScoreVisibility() {
+    score.style.visibility = "hidden";
 }
 
 
@@ -158,39 +242,6 @@ function updateScore() {
 
 }
 
-/*
-function game
-purpose: 
--plays 5 rounds of rock paper scissors between user and cpu
-*/
 
 
-
-
-// function playGame(){
-
-//     for(let i=1; i<=5; i++){
-//         userSelect = playUser();
-//         cpuSelect = playCPU();
-
-//         roundWinner = playRound(userSelect, cpuSelect)
-//         console.log(roundWinner);
-//         updateScore();
-//         displayScore();
-//     }
-
-// }
-
-
-/*
-declare variables and play game
-*/
-
-let userSelect="";
-let cpuSelect= "";
-// let roundWinner="";
-// let userWin = 0;
-// let cpuWin = 0;
-
-// playGame();
 

@@ -12,19 +12,40 @@
     <header>Rock-Paper-Scissors V2</header>
     <main>
         <div class="gameImages">
-            <div>
-            Rock
+            <div>(R)ock</div>
+            <div>(P)aper</div>
+            <div>(S)cissors</div>
+            
             <img class="gameButton" id="rock" src="./images/rock.jpeg" alt=""> 
-            </div>
             <img class="gameButton" id="paper" src="./images/paper.jpeg" alt="">
             <img class="gameButton" id="scissors" src="./images/scissors.png" alt="">
         </div>
-        <div class="scoreKeeping">
+
+        <div class ="previousRound">
+            <div id="won"></div>
+        </div> 
+
+        <div id="score" class="scoreKeeping">
             <div><h1>Score</h1></div>
-            <div>User:</div>
-            <div>Cpu:</div> 
+            <div id="UserScore">User:</div>
+            <div id="CPUScore">Cpu:</div> 
         </div>
     </main>
+
+
+
+    <!-- modal -->
+    <div class="restart">
+        <div>
+            <div id="modal-text">
+            </div>
+            <button class="close">
+                Restart Game
+            </button>
+        </div>          
+    </div>
+
+
     <footer>copyright 2022 Justin Naling</footer>
 </body>
 </html>
